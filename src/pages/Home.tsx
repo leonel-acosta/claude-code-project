@@ -1,11 +1,10 @@
 import { useState, useCallback } from 'react';
-import { useGeolocation, useWeather, useAuth } from '../hooks';
+import { useGeolocation, useWeather } from '../hooks';
 import { CurrentWeather, Forecast, LocationSearch } from '../components/weather';
 import { Button, Spinner } from '../components/ui';
 import { useTheme } from '../context';
 
 export function Home() {
-  const { logout, user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const geolocation = useGeolocation();
 
@@ -38,22 +37,14 @@ export function Home() {
               Weather
             </h1>
           </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleTheme}
-              className="!border-slate-300 dark:!border-slate-600"
-            >
-              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-            </Button>
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-300 hidden sm:inline">
-              {user?.name}
-            </span>
-            <Button variant="secondary" size="sm" onClick={logout}>
-              Logout
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleTheme}
+            className="!border-slate-300 dark:!border-slate-600"
+          >
+            {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+          </Button>
         </div>
       </header>
 

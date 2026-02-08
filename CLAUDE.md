@@ -4,13 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Weather web application that shows real-time weather data based on the user's current location. Users authenticate via OAuth to access the app.
+Weather web application that shows real-time weather data based on the user's current location or a searched city.
 
 ## Tech Stack
 
 - **Frontend**: React 19 + TypeScript
 - **Styling**: Tailwind CSS 4
-- **Auth**: OAuth 2.0 (Google provider)
 - **Weather API**: Open-Meteo (free, no API key required)
 - **Build Tool**: Vite
 - **Package Manager**: npm
@@ -49,17 +48,16 @@ npm run lint         # Run ESLint
 ```
 src/
 ├── components/      # Reusable UI components
-│   ├── ui/          # Base UI components (Button, Card, Input, etc.)
-│   └── weather/     # Weather-specific components (CurrentWeather, Forecast, etc.)
-├── hooks/           # Custom React hooks (useGeolocation, useWeather, useAuth)
+│   ├── ui/          # Base UI components (Button, Card, Input, Spinner)
+│   └── weather/     # Weather-specific components (CurrentWeather, Forecast, LocationSearch)
+├── hooks/           # Custom React hooks (useGeolocation, useWeather)
 ├── services/        # API calls and external service integrations
-│   ├── weather.ts   # Open-Meteo API client
-│   └── auth.ts      # OAuth configuration and helpers
+│   └── weather.ts   # Open-Meteo API client
 ├── types/           # TypeScript type definitions
 ├── utils/           # Utility/helper functions
-├── context/         # React context providers (Auth, Theme)
-├── pages/           # Page-level components (Home, Login)
-├── App.tsx          # Root component with routing and auth guard
+├── context/         # React context providers (Theme)
+├── pages/           # Page-level components (Home)
+├── App.tsx          # Root component
 └── main.tsx         # Entry point
 ```
 
@@ -72,13 +70,6 @@ src/
 - Tailwind classes go directly on elements — no separate CSS files
 - Handle loading, error, and empty states in every component that fetches data
 - Use `navigator.geolocation` API for user location, always handle permission denied
-
-## OAuth Flow
-
-- Login page shown to unauthenticated users
-- On success, store token and user info in React context + localStorage
-- Protected routes redirect to login if no active session
-- Provide a logout button that clears session and redirects to login
 
 ## Key Weather Codes (WMO)
 
