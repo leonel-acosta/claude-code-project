@@ -30,10 +30,10 @@ export function Login() {
 
   if (isLoading || code) {
     return (
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
         <div className="text-center">
           <Spinner size="lg" className="mx-auto" />
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
+          <p className="mt-6 text-slate-600 dark:text-slate-400 font-medium">
             {code ? 'Completing sign in...' : 'Loading...'}
           </p>
         </div>
@@ -42,19 +42,24 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-xl">
         <CardContent className="text-center">
-          <div className="text-6xl mb-6">🌤️</div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Weather App
+          <div className="text-7xl mb-6 animate-bounce" style={{ animationDuration: '3s' }}>
+            🌤️
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+            Weather
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Sign in to see real-time weather for your location
+          <p className="text-slate-600 dark:text-slate-400 mb-8 text-lg">
+            Check real-time weather for your location
           </p>
           <Button onClick={login} size="lg" className="w-full">
-            Sign in with Google
+            🔐 Sign in with Google
           </Button>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-6">
+            We only access your location and basic profile information
+          </p>
         </CardContent>
       </Card>
     </div>

@@ -33,7 +33,7 @@ export function Forecast({ days }: ForecastProps) {
         <CardTitle>7-Day Forecast</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {days.map((day) => {
             const weather = WEATHER_CODES[day.weatherCode] || {
               description: 'Unknown',
@@ -43,22 +43,24 @@ export function Forecast({ days }: ForecastProps) {
             return (
               <div
                 key={day.date}
-                className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+                className="flex items-center justify-between py-3 px-3 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-200"
               >
-                <div className="flex items-center gap-3 flex-1">
-                  <span className="text-2xl">{weather.icon}</span>
-                  <span className="text-gray-900 dark:text-gray-100 font-medium">
+                <div className="flex items-center gap-4 flex-1">
+                  <span className="text-2xl">
+                    {weather.icon}
+                  </span>
+                  <span className="text-slate-900 dark:text-slate-100 font-semibold min-w-24">
                     {formatDate(day.date)}
                   </span>
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 flex-1 text-center">
+                <div className="text-sm text-slate-600 dark:text-slate-400 flex-1 text-center">
                   {weather.description}
                 </div>
-                <div className="text-right flex-1">
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <div className="text-right flex-1 font-semibold">
+                  <span className="text-slate-900 dark:text-slate-100">
                     {Math.round(day.maxTemp)}°
                   </span>
-                  <span className="text-gray-400 dark:text-gray-500 ml-2">
+                  <span className="text-slate-500 dark:text-slate-400 ml-3 font-normal">
                     {Math.round(day.minTemp)}°
                   </span>
                 </div>

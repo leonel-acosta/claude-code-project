@@ -13,26 +13,35 @@ export function CurrentWeather({ data }: CurrentWeatherProps) {
   };
 
   return (
-    <Card className="text-center">
+    <Card className="text-center bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
       <CardContent>
-        <div className="text-6xl mb-4">{weather.icon}</div>
-        <div className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          {Math.round(data.temperature)}°C
+        <div className="text-7xl mb-6 animate-bounce" style={{ animationDuration: '3s' }}>
+          {weather.icon}
         </div>
-        <div className="text-xl text-gray-600 dark:text-gray-400 mb-6">
+        <div className="text-6xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+          {Math.round(data.temperature)}
+          <span className="text-4xl ml-1">°C</span>
+        </div>
+        <div className="text-lg text-slate-600 dark:text-slate-400 mb-8 font-medium">
           {weather.description}
         </div>
         <div className="grid grid-cols-2 gap-4 text-sm">
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
-            <div className="text-gray-500 dark:text-gray-400">Wind</div>
-            <div className="font-semibold text-gray-900 dark:text-gray-100">
-              {data.windSpeed} km/h
+          <div className="bg-blue-50 dark:bg-slate-700/50 border border-blue-100 dark:border-slate-600 rounded-lg p-4">
+            <div className="text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-wide">
+              Wind
+            </div>
+            <div className="font-bold text-slate-900 dark:text-slate-100 mt-2 text-lg">
+              {data.windSpeed}
+              <span className="text-sm ml-1">km/h</span>
             </div>
           </div>
-          <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
-            <div className="text-gray-500 dark:text-gray-400">Humidity</div>
-            <div className="font-semibold text-gray-900 dark:text-gray-100">
-              {data.humidity}%
+          <div className="bg-blue-50 dark:bg-slate-700/50 border border-blue-100 dark:border-slate-600 rounded-lg p-4">
+            <div className="text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-wide">
+              Humidity
+            </div>
+            <div className="font-bold text-slate-900 dark:text-slate-100 mt-2 text-lg">
+              {data.humidity}
+              <span className="text-sm ml-1">%</span>
             </div>
           </div>
         </div>

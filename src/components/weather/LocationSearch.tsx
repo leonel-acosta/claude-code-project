@@ -53,21 +53,25 @@ export function LocationSearch({ onLocationSelect }: LocationSearchProps) {
       </div>
 
       {error && (
-        <p className="mt-2 text-sm text-red-500">{error}</p>
+        <p className="mt-3 text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
       )}
 
       {results.length > 0 && (
-        <div className="absolute z-10 w-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-          {results.map((result) => (
+        <div className="absolute z-10 w-full mt-3 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+          {results.map((result, index) => (
             <button
               key={result.id}
               onClick={() => handleSelect(result)}
-              className="w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg transition-colors"
+              className={`w-full px-4 py-3 text-left hover:bg-blue-50 dark:hover:bg-slate-700/50 transition-colors duration-150 ${
+                index < results.length - 1
+                  ? 'border-b border-slate-200 dark:border-slate-700'
+                  : ''
+              }`}
             >
-              <div className="font-medium text-gray-900 dark:text-gray-100">
+              <div className="font-semibold text-slate-900 dark:text-slate-100">
                 {result.name}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">
                 {[result.admin1, result.country].filter(Boolean).join(', ')}
               </div>
             </button>
