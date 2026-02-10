@@ -19,7 +19,7 @@ export function CurrentWeather({ data, location }: CurrentWeatherProps) {
     : 'Current Location';
 
   return (
-    <Card className="text-center bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
+    <Card className="text-center bg-linear-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
       <CardContent>
         <div className="text-7xl mb-6 animate-bounce" style={{ animationDuration: '3s' }}>
           {weather.icon}
