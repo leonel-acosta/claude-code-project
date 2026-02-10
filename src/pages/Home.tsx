@@ -65,7 +65,7 @@ export function Home() {
             variant="outline"
             size="sm"
             onClick={toggleTheme}
-            className="!border-slate-300 dark:!border-slate-600"
+            className=""
           >
             {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
           </Button>
@@ -81,7 +81,7 @@ export function Home() {
             <Button
               variant="outline"
               onClick={handleUseMyLocation}
-              className="!border-slate-300 dark:!border-slate-600"
+              className=""
             >
               📍 Use My Location
             </Button>
