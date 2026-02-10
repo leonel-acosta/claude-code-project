@@ -56,9 +56,9 @@ export function Home() {
       <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="text-2xl">🌤️</div>
+            <div className="text-2xl">🌦️</div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-              Weather
+              SkyPulse
             </h1>
           </div>
           <Button
