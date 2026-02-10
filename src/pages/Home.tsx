@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useGeolocation, useWeather } from '../hooks';
 import { CurrentWeather, Forecast, LocationSearch } from '../components/weather';
+import type { LocationInfo } from '../components/weather';
 import { Button, Spinner } from '../components/ui';
 import { useTheme } from '../context';
 
@@ -8,18 +9,22 @@ export function Home() {
   const { theme, toggleTheme } = useTheme();
   const geolocation = useGeolocation();
 
-  const [customLocation, setCustomLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
+  const [customLocation, setCustomLocation] = useState<LocationInfo | null>(null);
 
   const latitude = customLocation?.latitude ?? geolocation.latitude;
   const longitude = customLocation?.longitude ?? geolocation.longitude;
 
   const weather = useWeather(latitude, longitude);
 
-  const handleLocationSelect = useCallback((lat: number, lon: number) => {
-    setCustomLocation({ latitude: lat, longitude: lon });
+  // Build location info for display - use custom location or geolocation coords
+  const currentLocationInfo: LocationInfo | undefined = customLocation ?? (
+    geolocation.latitude && geolocation.longitude
+      ? { name: '', latitude: geolocation.latitude, longitude: geolocation.longitude }
+      : undefined
+  );
+
+  const handleLocationSelect = useCallback((location: LocationInfo) => {
+    setCustomLocation(location);
   }, []);
 
   const handleUseMyLocation = useCallback(() => {
@@ -102,7 +107,7 @@ export function Home() {
 
         {weather.data && (
           <div className="space-y-6">
-            <CurrentWeather data={weather.data.current} />
+            <CurrentWeather data={weather.data.current} location={currentLocationInfo} />
             <Forecast days={weather.data.daily} />
           </div>
         )}

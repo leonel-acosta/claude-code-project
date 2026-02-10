@@ -3,8 +3,16 @@ import { Input, Button } from '../ui';
 import { searchCity } from '../../services/weather';
 import type { GeocodingResult } from '../../types';
 
+export interface LocationInfo {
+  name: string;
+  country?: string;
+  admin1?: string;
+  latitude: number;
+  longitude: number;
+}
+
 interface LocationSearchProps {
-  onLocationSelect: (latitude: number, longitude: number) => void;
+  onLocationSelect: (location: LocationInfo) => void;
 }
 
 export function LocationSearch({ onLocationSelect }: LocationSearchProps) {
@@ -33,7 +41,13 @@ export function LocationSearch({ onLocationSelect }: LocationSearchProps) {
   }, [query]);
 
   const handleSelect = (result: GeocodingResult) => {
-    onLocationSelect(result.latitude, result.longitude);
+    onLocationSelect({
+      name: result.name,
+      country: result.country,
+      admin1: result.admin1,
+      latitude: result.latitude,
+      longitude: result.longitude,
+    });
     setResults([]);
     setQuery('');
   };
