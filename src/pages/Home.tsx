@@ -1,23 +1,42 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useGeolocation, useWeather } from '../hooks';
 import { CurrentWeather, Forecast, LocationSearch } from '../components/weather';
 import type { LocationInfo } from '../components/weather';
 import { Button, Spinner } from '../components/ui';
 import { useTheme } from '../context';
+import { reverseGeocode } from '../services/weather';
 
 export function Home() {
   const { theme, toggleTheme } = useTheme();
   const geolocation = useGeolocation();
 
   const [customLocation, setCustomLocation] = useState<LocationInfo | null>(null);
+  const [geoLocationInfo, setGeoLocationInfo] = useState<LocationInfo | null>(null);
 
   const latitude = customLocation?.latitude ?? geolocation.latitude;
   const longitude = customLocation?.longitude ?? geolocation.longitude;
 
   const weather = useWeather(latitude, longitude);
 
-  // Build location info for display - use custom location or geolocation coords
-  const currentLocationInfo: LocationInfo | undefined = customLocation ?? (
+  // Reverse geocode when using browser geolocation
+  useEffect(() => {
+    if (geolocation.latitude && geolocation.longitude && !customLocation) {
+      reverseGeocode(geolocation.latitude, geolocation.longitude).then((result) => {
+        if (result) {
+          setGeoLocationInfo({
+            name: result.name,
+            country: result.country,
+            admin1: result.admin1,
+            latitude: geolocation.latitude!,
+            longitude: geolocation.longitude!,
+          });
+        }
+      });
+    }
+  }, [geolocation.latitude, geolocation.longitude, customLocation]);
+
+  // Build location info for display - use custom location or reverse-geocoded location
+  const currentLocationInfo: LocationInfo | undefined = customLocation ?? geoLocationInfo ?? (
     geolocation.latitude && geolocation.longitude
       ? { name: '', latitude: geolocation.latitude, longitude: geolocation.longitude }
       : undefined

@@ -2,6 +2,7 @@ import type { WeatherData, GeocodingResult } from '../types';
 
 const BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODING_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+const REVERSE_GEOCODING_URL = 'https://nominatim.openstreetmap.org/reverse';
 
 export async function fetchWeather(
   latitude: number,
@@ -65,4 +66,50 @@ export async function searchCity(query: string): Promise<GeocodingResult[]> {
   const data = await response.json();
 
   return data.results || [];
+}
+
+export interface ReverseGeocodingResult {
+  name: string;
+  country?: string;
+  admin1?: string;
+}
+
+export async function reverseGeocode(
+  latitude: number,
+  longitude: number
+): Promise<ReverseGeocodingResult | null> {
+  try {
+    const params = new URLSearchParams({
+      lat: latitude.toString(),
+      lon: longitude.toString(),
+      format: 'json',
+    });
+
+    const response = await fetch(`${REVERSE_GEOCODING_URL}?${params}`, {
+      headers: {
+        'User-Agent': 'WeatherApp/1.0',
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    const name = data.address?.city
+      || data.address?.town
+      || data.address?.village
+      || data.address?.municipality
+      || data.address?.county
+      || '';
+
+    return {
+      name,
+      country: data.address?.country,
+      admin1: data.address?.state || data.address?.region,
+    };
+  } catch {
+    return null;
+  }
 }
